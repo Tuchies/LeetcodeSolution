@@ -20,13 +20,13 @@ int paritition(vector<int> &in, int low, int high) {
     while (low < high) {
         // 从后往前找小于基准数的
         while (low < high && in[high] >= pivot) {
-            --high;
+            high--;
         }
         // 填坑
         in[low] = in[high];
         // 从前往后找大于基准数的
         while (low < high && in[low] <= pivot) {
-            ++low;
+            low++;
         }
         // 填坑
         in[high] = in[low];

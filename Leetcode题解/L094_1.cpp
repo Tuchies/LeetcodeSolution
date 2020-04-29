@@ -25,20 +25,21 @@ struct TreeNode
 vector<int> inorderTraversal(TreeNode* root) {
     vector<int> list;
     stack<TreeNode*> s;
-    TreeNode* current = root;
-    while(current || s.size()) {
-        // 1.跟入栈, 并遍历左子树
-        while (current) {
-           // 看到根节点就入栈, 延迟访问
-           s.push(current);
-           // 先访问左子树
-           current = current->left;
+    if (root != NULL) {
+        TreeNode* cur = root;
+        while(cur != NULL || !s.empty()) {
+            if (cur != NULL) {
+                // 入栈
+                s.push(cur);
+                cur = cur->left;
+            } else {
+                // 出栈访问, 并观察有无右子树
+                cur = s.top();
+                s.pop();
+                list.push_back(cur->val);
+                cur = cur->right;
+            }
         }
-        // 2.左子树完毕后访问栈中的根, 栈顶的是最近的根, 访问完之后弹出它
-        current = s.top(); s.pop();
-        list.push_back(current->val);
-        // 3.处理右子树
-        current = current->right;
     }
     return list;
 }
