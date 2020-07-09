@@ -38,6 +38,7 @@ TreeNode* helper(vector<int> pre,int startPre,int endPre,vector<int> vin,int sta
     for(int i = startVin; i <= endVin; i++)
         if(vin[i] == pre[startPre]) {
             // 2.1左子树递归创建
+            // 关键在于左右子树的索引范围界定
             root->left = helper(pre,startPre+1,startPre+i-startVin,vin,startVin,i-1);
             // 2.2右子树递归创建
             root->right= helper(pre,i-startVin+startPre+1,endPre,vin,i+1,endVin);
