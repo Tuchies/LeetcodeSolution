@@ -24,7 +24,8 @@ struct TreeNode {
 TreeNode* helper(vector<int> pre,int startPre,int endPre,vector<int> vin,int startVin,int endVin);
 
 TreeNode* reConstructBinaryTree(vector<int> pre,vector<int> vin) {
-    TreeNode* root = helper(pre,0,pre.size()-1,vin,0,vin.size()-1);
+    TreeNode* root = helper(pre,0,pre.size()-1, 
+                            vin,0,vin.size()-1);
     return root;
 }
 
