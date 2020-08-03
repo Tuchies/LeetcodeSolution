@@ -8,6 +8,7 @@
 
 using namespace std;
 
+// 合并
 void merge(vector<int> &in, int le, int m, int r){
     // 左边数组大小
     vector<int> leftArray(m-le);
@@ -16,8 +17,8 @@ void merge(vector<int> &in, int le, int m, int r){
 
     // 给两个数组填充数据
     for (int i = le; i < m; i++) {
-            leftArray[i - le] = in[i];
-        }
+        leftArray[i - le] = in[i];
+    }
     for (int i = m; i <= r; i++) {
         rightArray[i - m] = in[i];
     }
@@ -26,13 +27,11 @@ void merge(vector<int> &in, int le, int m, int r){
     // arrays数组的第一个元素
     int  k = le;
 
-
     //比较这两个数组的值，哪个小，就往数组上放
     while (i < leftArray.size() && j < rightArray.size()) {
         //谁比较小，谁将元素放入大数组中,移动指针，继续比较下一个
         if (leftArray[i] < rightArray[j]) {
             in[k] = leftArray[i];
-
             i++;
             k++;
         } else {
@@ -45,7 +44,6 @@ void merge(vector<int> &in, int le, int m, int r){
     //如果左边的数组还没比较完，右边的数都已经完了，那么将左边的数抄到大数组中(剩下的都是大数字)
     while (i < leftArray.size()) {
         in[k] = leftArray[i];
-
         i++;
         k++;
     }
@@ -53,12 +51,12 @@ void merge(vector<int> &in, int le, int m, int r){
     //如果右边的数组还没比较完，左边的数都已经完了，那么将右边的数抄到大数组中(剩下的都是大数字)
     while (j < rightArray.size()) {
         in[k] = rightArray[j];
-
         k++;
         j++;
     }
 }
 
+// 递归
 void mergeSort(vector<int> &in, int left, int right) {
     if(left == right) return;
 
@@ -68,7 +66,6 @@ void mergeSort(vector<int> &in, int left, int right) {
     mergeSort(in, left, middle);
     //递归拆分右半边元素
     mergeSort(in, middle+1, right);
-
     //合并
     merge(in, left, middle+1, right);
 }

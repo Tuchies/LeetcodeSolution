@@ -14,38 +14,33 @@
 
 using namespace std;
 
-// 辅助寻找基准数
-int paritition(vector<int> &in, int low, int high) {    
-    int pivot = in[low];
-    while (low < high) {
-        // 从后往前找小于基准数的
-        while (low < high && in[high] >= pivot) {
-            high--;
+void quickSort(vector<int>& list, int low, int high){
+    int i = low, j = high;
+    int pivot;
+    if(i < j){
+        // 基准数取数组首元素
+        pivot = list[i];
+        // 满足 i==j, 才能将数组分为两部分
+        while (i != j) {
+            // 从后往前找小于基准数的
+            while(j > i && list[j] >= pivot)-- j;
+            // 放在之前的空位上
+            list[i] = list[j];
+            // 从前往后找大于基准数的
+            while(i < j && list[i] <= pivot)++ i;
+            // 放在之前的空位上
+            list[j] = list[i];
         }
-        // 填坑
-        in[low] = in[high];
-        // 从前往后找大于基准数的
-        while (low < high && in[low] <= pivot) {
-            low++;
-        }
-        // 填坑
-        in[high] = in[low];
-   }
-   in[low] = pivot;
-   return low;
- }
-
- void quickSort(vector<int>& in, int low, int high) 
- {
-    if (low < high) {
-        int pivot = paritition(in, low, high);
-        quickSort(in, low, pivot - 1);
-        quickSort(in, pivot + 1, high);
+        // 此时i位于数组中央, 放基准数
+        list[i] = pivot;
+        quickSort(list, low, i - 1);
+        quickSort(list, i + 1, high);
     }
- }
+    return;
+}
 
  int main() {
-     vector<int> in;
+    vector<int> in;
     in.push_back(3);
     in.push_back(7);
     in.push_back(4);
