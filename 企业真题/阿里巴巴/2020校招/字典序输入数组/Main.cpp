@@ -7,31 +7,50 @@
 3 1 4 2
 */
 
+/**
+ * 回溯
+ * 剪枝条件: 相差超过1
+ * 返回条件: trace.size == nums.size
+ */ 
+
 #include<iostream>
 #include<vector>
+#include<algorithm>
 using namespace std;
 
-void helper(vector<int> val, vector<int>& cur, int n) {
-    if (n == 0) {
-        for (int i = 0; i < cur.size(); i ++)
-            cout << cur[i] << " ";
+void printTrace(vector<int>& list) {
+    for (int j = 0; j < list.size(); j ++)
+        cout << list[j] << " ";
+}
+
+bool has(vector<int>&list, int i ) {
+    for (int j = 0; j < list.size(); j ++) {
+        if (list[j] == i) return true;
     }
-    else {
-        for (int j = 1; j < val.size(); j ++) {
-            if (val[j] || (cur.size() && j >= cur[cur.size()-1]-1 && j <= cur[cur.size()-1]+1))
-                continue;
-            val[j] = 1;
-            cur.push_back(j);
-            helper(val,cur,n-1);
-            val[j] = 0;
-        }
+    cout << endl;
+    return false;
+}
+
+void backtrace(vector<int>& trace, int n) {
+    if (trace.size() == n) {
+        printTrace(trace);
+        return;
+    }
+        
+    // 遍历
+    for (int i = 1; i < n+1; i ++) {
+        // 剪枝
+        if (has(trace, i)) continue;
+        trace.push_back(i);
+        backtrace(trace,n);
+        trace.pop_back();
     }
 }
 
 int main() {
     int n;
     cin >> n;
-    vector<int> val(n+1);
-    vector<int> cur;
-    helper(val,cur,n);
+    vector<int> track;
+    backtrace(track, n);
+    return 0;
 }
